@@ -80,4 +80,9 @@
     .card-header{
         box-shadow: 5px 5px 8px #c5c5c5;
     }
+    .btn-secondary:hover {
+        background-color: #b4e1ff;
+        color: darkblue;
+        width: 230px;
+    }
 </style>
