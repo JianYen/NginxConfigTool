@@ -13,21 +13,25 @@
                     </b-card-header>
 
                     <!--Server區塊-->
-                    <div class="row button-content" v-if="col==1">
-<!--                        <div class="row server-scope1">-->
+                    <div class=" button-content" v-if="col==1">
+                        <div class="row server-scope1">
                             <div class="col-md-4 server-scope1">Domain</div>
                             <div class="col-md-4">Path</div>
                             <div class="col-md-4">Document root</div>
-<!--                        </div>-->
+                        </div>
+                        <div class="row" server-scope2>
                             <div class="col-md-4"><input type="text" placeholder="example.com"></div>
                             <div class="col-md-4"><input type="text" placeholder="/var/www/example.com"></div>
                             <div class="col-md-4"><input type="text" placeholder="/public"></div>
-
+                        </div>
+                        <div class="row">
                         <div class="col-md-2">www.subdomain</div>
                         <div class="co-md-10">
+
                             <label for="sub-domain-checkbox">
                                 <input type="checkbox" id="sub-domain-checkbox" >enabled(example.com)
                             </label>
+                        </div>
                         </div>
                     </div>
                     <div class="button-content" v-if="col==2">
@@ -82,7 +86,7 @@
         background-color: #a9865d;
     }
     .server-scope1{
-
+        margin: auto;
     }
 
 
