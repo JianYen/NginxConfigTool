@@ -19,13 +19,13 @@
                             <div class="col-md-4">Path</div>
                             <div class="col-md-4">Document root</div>
                         </div>
-                        <div class="row" server-scope2>
+                        <div class="row server-scope2">
                             <div class="col-md-4"><input type="text" placeholder="example.com"></div>
                             <div class="col-md-4"><input type="text" placeholder="/var/www/example.com"></div>
                             <div class="col-md-4"><input type="text" placeholder="/public"></div>
                         </div>
                         <div class="row">
-                        <div class="col-md-2">www.subdomain</div>
+                        <div class="col-md-2 server-scope3">www.subdomain</div>
                         <div class="co-md-10">
 
                             <label for="sub-domain-checkbox">
@@ -33,6 +33,21 @@
                             </label>
                         </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-2 col-md-2 server-scope4">Redirect subdomains</div>
+                            <div class="co-md-10">
+
+                                <label for="Redirect-subdomains-checkbox">
+                                    <input type="checkbox" id="Redirect-subdomains-checkbox" >enabled(example.com)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row server-scope5">
+                            <div class="col-md-4">listen</div>
+                            <div class="col-md-4">IPv4<input type="text" value="*"></div>
+                            <div class="col-md-4">IPv6<input type="text" value="::"></div>
+                        </div>
+
                     </div>
                     <div class="button-content" v-if="col==2">
                         BBB
@@ -87,6 +102,18 @@
     }
     .server-scope1{
         margin: auto;
+    }
+    .server-scope2{
+        margin: auto;
+    }
+    .server-scope3{
+        margin: 3px 15px;
+    }
+    .server-scope4{
+        margin: 3px 15px;
+    }
+    .server-scope5{
+        margin: 3px 5px;
     }
 
 
