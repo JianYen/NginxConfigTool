@@ -86,8 +86,19 @@
                     </div>
 
                     <!--Reverse Proxy區塊-->
-                    <div class="button-content" v-if="col==3">
-                        CCC
+                    <div class="button-content " v-if="col==3">
+                        <div class="row reverse-proxy-scope1">
+                            <div class="col-md-2">Reverse Proxy</div>
+                            <div class="col-md-10"><label for="reverse-proxy-checkbox"><input type="checkbox" id="reverse-proxy-checkbox">enabled</label></div>
+                        </div>
+                        <div class="row reverse-proxy-scope2">
+                            <div class="col-md-3">Path</div>
+                            <div class="col-md-9"><input type="text" value="/"></div>
+                        </div>
+                        <div class="row reverse-proxy-scope3">
+                            <div class="col-md-3">proxy_pass</div>
+                            <div class="col-md-9"><input type="text" value="http://127.0.0.1:8080"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -174,6 +185,9 @@
     }
     .server-scope5{
         margin: 3px 5px;
+    }
+    .config-preview{
+        margin: 100px auto;
     }
 
 
