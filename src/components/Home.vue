@@ -15,7 +15,7 @@
                     <!--Server區塊-->
                     <div class=" button-content" v-if="col==1">
                         <div class="row server-scope1">
-                            <div class="col-md-4 server-scope1">Domain</div>
+                            <div class="col-md-4 ">Domain</div>
                             <div class="col-md-4">Path</div>
                             <div class="col-md-4">Document root</div>
                         </div>
@@ -52,12 +52,29 @@
                     <div class="button-content" v-if="col==2">
                         BBB
                     </div>
+
+                    <!--Reverse Proxy區塊-->
                     <div class="button-content" v-if="col==3">
                         CCC
                     </div>
                 </div>
 
-        <div>
+        <div class="config-preview">
+            <pre>
+                <code>
+                    server {
+                        listen :443 ssl http2;
+                        listen [::]:443 ssl http2;
+
+                        server_name example.com;
+                        root /var/www/example.com/public;
+                    }
+                </code>
+            </pre>
+
+        </div>
+
+        <div class="config-preview">
 
         </div>
     </div>
@@ -77,6 +94,9 @@
             return {
                 buttonScope:['buttonScopeClicked','buttonScopeClicked','buttonScopeClicked'],
                 col: 1,
+                domainInputBox: null,
+                pathInputBox: null,
+                documentRootInputBox: null
             }
         }
     }
