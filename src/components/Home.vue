@@ -29,7 +29,7 @@
                         <div class="co-md-10">
 
                             <label for="sub-domain-checkbox">
-                                <input type="checkbox" id="sub-domain-checkbox" >enabled(example.com)
+                                <input type="checkbox" id="sub-domain-checkbox" v-model="subDomainCheckbox">enabled(example.com)
                             </label>
                         </div>
                         </div>
@@ -44,8 +44,8 @@
                         </div>
                         <div class="row server-scope5">
                             <div class="col-md-4">listen</div>
-                            <div class="col-md-4">IPv4<input type="text" value="*"></div>
-                            <div class="col-md-4">IPv6<input type="text" value="::"></div>
+                            <div class="col-md-4">IPv4<input type="text" value="*" v-model="ipv4Input"></div>
+                            <div class="col-md-4">IPv6<input type="text" value="::" v-model="ipv6Input"></div>
                         </div>
 
                     </div>
@@ -98,7 +98,7 @@
                         {{ConfigPreview.LISTEN}} {{ipv4Input}};
                         {{ConfigPreview.LISTEN}} [::]{{ipv6Input}};
 
-                        {{ConfigPreview.SERVER_NAME}} {{domainInput}};
+                    {{ConfigPreview.SERVER_NAME}} <span v-if="subDomainCheckbox">www.</span>{{domainInput}};
                         {{ConfigPreview.SET}} {{pathInput}}
                         {{ConfigPreview.ROOT}} {{documentRootInput}};
                     }
@@ -136,6 +136,7 @@
                 documentRootInput: null,
                 ipv4Input: null,
                 ipv6Input: null,
+                subDomainCheckbox: false
             }
         }
     }
