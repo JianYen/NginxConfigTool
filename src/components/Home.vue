@@ -84,15 +84,27 @@
                         </div>
                         <div class="row https-scope7">
                             <div class="col-md-4">Certification type</div>
-                            <b-form-group>
-                                <b-form-radio-group
-                                        v-model="selected"
-                                        :options="options"
-                                        name="radios-stacked"
-                                        stacked
-                                ></b-form-radio-group>
-                            </b-form-group>
-                            <div class="mt-5">Selected: <strong>{{ selected }}</strong></div>
+                            <div class="col-md-4">
+                                <b-form-group>
+                                    <b-form-radio-group
+                                            v-model="CertificationSelected"
+                                            :options="options"
+                                            name="radios-stacked"
+                                            stacked
+                                    ></b-form-radio-group>
+                                </b-form-group>
+                            </div>
+                            <div class="col-md-4">Selected: <strong>{{ selected }}</strong></div>
+                        </div>
+                        <div class="row https-scope8">
+                            <div class="col-md-4">Let's Encrypt e-mail</div>
+                            <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row https-scope8-2">
+                            <div class="col-md-4">ssl_certificate</div>
+                            <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
+                            <div class="col-md-4"></div>
                         </div>
                     </div>
 
