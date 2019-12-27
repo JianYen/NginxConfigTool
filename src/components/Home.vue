@@ -49,8 +49,40 @@
                         </div>
 
                     </div>
+
+                    <!--HTTPS區塊-->
                     <div class="button-content" v-if="col==2">
-                        BBB
+                        <div class="row http-scope1">
+                            <div class="col-md-4">HTTPS</div>
+                            <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row http-scope2">
+                            <div class="col-md-4">HTTPS/2</div>
+                            <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row http-scope3">
+                            <div class="col-md-4">Force HTTPS</div>
+                            <div class="col-md-4"><b-form-checkbox>enabled(http://example.com -> https://example.com)</b-form-checkbox></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row http-scope4">
+                            <div class="col-md-4">HSTS HTTPS</div>
+                            <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row http-scope5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4"><b-form-checkbox>includeSubDomains</b-form-checkbox></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row http-scope6">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4"><b-form-checkbox>preload</b-form-checkbox></div>
+                            <div class="col-md-4"></div>
+                        </div>
+
                     </div>
 
                     <!--Reverse Proxy區塊-->
