@@ -20,9 +20,9 @@
                             <div class="col-md-4">Document root</div>
                         </div>
                         <div class="row server-scope2">
-                            <div class="col-md-4"><input type="text" placeholder="example.com"></div>
-                            <div class="col-md-4"><input type="text" placeholder="/var/www/example.com"></div>
-                            <div class="col-md-4"><input type="text" placeholder="/public"></div>
+                            <div class="col-md-4"><input type="text" placeholder="example.com" v-model="domainInput"></div>
+                            <div class="col-md-4"><input type="text" placeholder="/var/www/example.com" v-model="pathInput"></div>
+                            <div class="col-md-4"><input type="text" placeholder="/public" v-model="documentRootInput"></div>
                         </div>
                         <div class="row">
                         <div class="col-md-2 server-scope3">www.subdomain</div>
@@ -95,11 +95,12 @@
             <pre>
                 <code>
                     server {
-                        {{PreviewConst.LISTEN}} :443 ssl http2;
-                        listen [::]:443 ssl http2;
+                        {{ConfigPreview.LISTEN}} {{ipv4Input}};
+                        {{ConfigPreview.LISTEN}} [::]{{ipv6Input}};
 
-                        server_name example.com;
-                        root /var/www/example.com/public;
+                        {{ConfigPreview.SERVER_NAME}} {{domainInput}};
+                        {{ConfigPreview.SET}} {{pathInput}}
+                        {{ConfigPreview.ROOT}} {{documentRootInput}};
                     }
                 </code>
             </pre>
@@ -111,7 +112,7 @@
 </template>
 
 <script>
-    import  PreviewConst  from '../previewconst'
+    import ConfigPreview from '../config.preview'
 
     export default {
         name: "Home",
@@ -129,7 +130,12 @@
                 domainInputBox: null,
                 pathInputBox: null,
                 documentRootInputBox: null,
-                PreviewConst: PreviewConst
+                ConfigPreview: ConfigPreview,
+                domainInput: null,
+                pathInput: null,
+                documentRootInput: null,
+                ipv4Input: null,
+                ipv6Input: null,
             }
         }
     }
