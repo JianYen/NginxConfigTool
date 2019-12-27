@@ -52,37 +52,48 @@
 
                     <!--HTTPS區塊-->
                     <div class="button-content" v-if="col==2">
-                        <div class="row http-scope1">
+                        <div class="row https-scope1">
                             <div class="col-md-4">HTTPS</div>
                             <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row http-scope2">
+                        <div class="row https-scope2">
                             <div class="col-md-4">HTTPS/2</div>
                             <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row http-scope3">
+                        <div class="row https-scope3">
                             <div class="col-md-4">Force HTTPS</div>
                             <div class="col-md-4"><b-form-checkbox>enabled(http://example.com -> https://example.com)</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row http-scope4">
+                        <div class="row https-scope4">
                             <div class="col-md-4">HSTS HTTPS</div>
                             <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row http-scope5">
+                        <div class="row https-scope5">
                             <div class="col-md-4"></div>
                             <div class="col-md-4"><b-form-checkbox>includeSubDomains</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row http-scope6">
+                        <div class="row https-scope6">
                             <div class="col-md-4"></div>
                             <div class="col-md-4"><b-form-checkbox>preload</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-
+                        <div class="row https-scope7">
+                            <div class="col-md-4">Certification type</div>
+                            <b-form-group>
+                                <b-form-radio-group
+                                        v-model="selected"
+                                        :options="options"
+                                        name="radios-stacked"
+                                        stacked
+                                ></b-form-radio-group>
+                            </b-form-group>
+                            <div class="mt-5">Selected: <strong>{{ selected }}</strong></div>
+                        </div>
                     </div>
 
                     <!--Reverse Proxy區塊-->
@@ -136,7 +147,12 @@
                 documentRootInput: null,
                 ipv4Input: null,
                 ipv6Input: null,
-                subDomainCheckbox: false
+                subDomainCheckbox: false,
+                selected: 'first',
+                options: [
+                    { text: 'Let\'sEncrypt', value: 'first' },
+                    { text: 'custom certificate', value: 'second' }
+                ]
             }
         }
     }
