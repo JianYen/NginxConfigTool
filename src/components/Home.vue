@@ -63,7 +63,7 @@
             <pre>
                 <code>
                     server {
-                        listen :443 ssl http2;
+                        {{PreviewConst.LISTEN}} :443 ssl http2;
                         listen [::]:443 ssl http2;
 
                         server_name example.com;
@@ -74,13 +74,13 @@
 
         </div>
 
-        <div class="config-preview">
 
-        </div>
     </div>
 </template>
 
 <script>
+    import  PreviewConst  from '../previewconst'
+
     export default {
         name: "Home",
         methods: {
@@ -96,7 +96,8 @@
                 col: 1,
                 domainInputBox: null,
                 pathInputBox: null,
-                documentRootInputBox: null
+                documentRootInputBox: null,
+                PreviewConst: PreviewConst
             }
         }
     }
