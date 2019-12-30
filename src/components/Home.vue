@@ -21,7 +21,7 @@
                         </div>
                         <div class="row server-scope2">
                             <div class="col-md-4"><input type="text" placeholder="example.com" v-model="domainInput"></div>
-                            <div class="col-md-4"><input type="text" placeholder="/var/www/example.com" v-model="pathInput"></div>
+                            <div class="col-md-4"><input type="text" placeholder="/var/www/example.com" v-model="serverPathInput"></div>
                             <div class="col-md-4"><input type="text" placeholder="/public" v-model="documentRootInput"></div>
                         </div>
                         <div class="row">
@@ -104,11 +104,11 @@
                         </div>
                         <div class="row reverse-proxy-scope2">
                             <div class="col-md-3">Path</div>
-                            <div class="col-md-9"><input type="text" value="/"></div>
+                            <div class="col-md-9"><input type="text" v-model="reverseProxyPathInput"></div>
                         </div>
                         <div class="row reverse-proxy-scope3">
                             <div class="col-md-3">proxy_pass</div>
-                            <div class="col-md-9"><input type="text" value="http://127.0.0.1:8080"></div>
+                            <div class="col-md-9"><input type="text" value="http://127.0.0.1:80"></div>
                         </div>
                     </div>
                 </div>
@@ -121,8 +121,14 @@
                         {{ConfigPreview.LISTEN}} [::]{{ipv6Input}};
 
                     {{ConfigPreview.SERVER_NAME}} <span v-if="subDomainCheckbox">www.</span>{{domainInput}};
-                        {{ConfigPreview.SET}} {{pathInput}}
+                        {{ConfigPreview.SET}} {{serverPathInput}}
                         {{ConfigPreview.ROOT}} {{documentRootInput}};
+
+                        <span>
+                            location /{{reverseProxyPathInput}}{
+
+                            }
+                        </span>
                     }
                 </code>
             </pre>
@@ -154,7 +160,7 @@
                 documentRootInputBox: null,
                 ConfigPreview: ConfigPreview,
                 domainInput: null,
-                pathInput: null,
+                serverPathInput: null,
                 documentRootInput: null,
                 ipv4Input: null,
                 ipv6Input: null,
@@ -163,7 +169,8 @@
                 options: [
                     { text: 'Let\'sEncrypt', value: 'first' },
                     { text: 'custom certificate', value: 'second' }
-                ]
+                ],
+                reverseProxyPathInput: null
             }
         }
     }

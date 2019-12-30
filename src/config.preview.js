@@ -4,5 +4,5 @@ export default {
          SERVER_NAME: 'server_name',
          SET: 'set',
          ROOT: 'root',
-         LOCATION: 'location'
+         INDEX: 'index',
 }
