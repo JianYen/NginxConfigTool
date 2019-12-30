@@ -52,64 +52,67 @@
 
                     <!--HTTPS區塊-->
                     <div class="button-content" v-if="col==2">
-                        <div class="row https-scope1">
+                        <div class="row https-scope">
                             <div class="col-md-4">HTTPS</div>
-                            <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                            <div class="col-md-4"><b-form-checkbox v-model="httpEnabled" :click="httpSwitch()">enabled</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row https-scope2">
-                            <div class="col-md-4">HTTPS/2</div>
-                            <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope3">
-                            <div class="col-md-4">Force HTTPS</div>
-                            <div class="col-md-4"><b-form-checkbox>enabled (http://example.com -> https://example.com)</b-form-checkbox></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope4">
-                            <div class="col-md-4">HSTS HTTPS</div>
-                            <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope5">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4"><b-form-checkbox>includeSubDomains</b-form-checkbox></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope6">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4"><b-form-checkbox>preload</b-form-checkbox></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope7">
-                            <div class="col-md-4">Certification type</div>
-                            <div class="col-md-4">
-                                <b-form-group>
-                                    <b-form-radio-group
-                                            v-model="CertificationSelected"
-                                            :options="CertificationOptions"
-                                            name="radios-stacked"
-                                            stacked
-                                    ></b-form-radio-group>
-                                </b-form-group>
+                        <div :class=httpConfig>
+                            <div class="row https-scope2">
+                                <div class="col-md-4">HTTPS/2</div>
+                                <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope3">
+                                <div class="col-md-4">Force HTTPS</div>
+                                <div class="col-md-4"><b-form-checkbox>enabled (http://example.com -> https://example.com)</b-form-checkbox></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope4">
+                                <div class="col-md-4">HSTS HTTPS</div>
+                                <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope5">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"><b-form-checkbox>includeSubDomains</b-form-checkbox></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope6">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"><b-form-checkbox>preload</b-form-checkbox></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope7">
+                                <div class="col-md-4">Certification type</div>
+                                <div class="col-md-4">
+                                    <b-form-group>
+                                        <b-form-radio-group
+                                                v-model="CertificationSelected"
+                                                :options="CertificationOptions"
+                                                name="radios-stacked"
+                                                stacked
+                                        ></b-form-radio-group>
+                                    </b-form-group>
+                                </div>
+                            </div>
+                            <div class="row https-scope8" v-if="CertificationSelected=='first'">
+                                <div class="col-md-4">Let's Encrypt e-mail</div>
+                                <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope9-1" v-if="CertificationSelected=='second'">
+                                <div class="col-md-4">ssl_certificate</div>
+                                <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row https-scope9-2" v-if="CertificationSelected=='second'">
+                                <div class="col-md-4">ssl_certificate_key</div>
+                                <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.key"></div>
+                                <div class="col-md-4"></div>
                             </div>
                         </div>
-                        <div class="row https-scope8" v-if="CertificationSelected=='first'">
-                            <div class="col-md-4">Let's Encrypt e-mail</div>
-                            <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope9-1" v-if="CertificationSelected=='second'">
-                            <div class="col-md-4">ssl_certificate</div>
-                            <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
-                            <div class="col-md-4"></div>
-                        </div>
-                        <div class="row https-scope9-2" v-if="CertificationSelected=='second'">
-                            <div class="col-md-4">ssl_certificate_key</div>
-                            <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.key"></div>
-                            <div class="col-md-4"></div>
-                        </div>
+
 
                     </div>
 
@@ -169,6 +172,14 @@
             },
             inputServerPath () {
                 this.serverPathPlaceholder = this.serverPathInput
+            },
+            httpSwitch () {
+                if(this.httpEnabled == true) {
+                    this.httpConfig = 'httpEnabled'
+                }
+                else{
+                    this.httpConfig = 'httpClose'
+                }
             }
         },
         data () {
@@ -194,6 +205,8 @@
                 reverseProxyPathInput: '',
                 reverseProxyPass: '',
                 reverseProxyEnabled: false,
+                httpEnabled: true,
+                httpConfig: 'httpEnabled',
             }
         }
 
@@ -235,6 +248,12 @@
     }
     .config-preview{
         margin-top: 100px;
+    }
+    .httpEnabled{
+    }
+    .httpClose{
+        opacity:0.5;
+        pointer-events:none;
     }
 
 
