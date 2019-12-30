@@ -125,7 +125,7 @@
                         </div>
                         <div class="row reverse-proxy-scope3">
                             <div class="col-md-3">proxy_pass</div>
-                            <div class="col-md-9"><input type="text" value="http://127.0.0.1:80"></div>
+                            <div class="col-md-9"><input type="text" value="http://127.0.0.1:80" v-model="reverseProxyPass"></div>
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
 
                         <span>
                             location /{{reverseProxyPathInput}}{
-
+                                {{ConfigPreview.PROXY_PASS}} {{reverseProxyPass}}
                             }
                         </span>
                     }
@@ -187,7 +187,8 @@
                     { text: 'Let\'sEncrypt', value: 'first' },
                     { text: 'custom certificate', value: 'second' }
                 ],
-                reverseProxyPathInput: null
+                reverseProxyPathInput: null,
+                reverseProxyPass: null
             }
         }
     }
