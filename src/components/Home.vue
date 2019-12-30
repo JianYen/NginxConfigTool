@@ -21,7 +21,7 @@
                         </div>
                         <div class="row server-scope2">
                             <div class="col-md-4"><input type="text" placeholder="example.com" v-model="domainInput"></div>
-                            <div class="col-md-4"><input type="text" placeholder="/var/www/example.com" v-model="serverPathInput"></div>
+                            <div class="col-md-4"><input id="server-path-input" type="text" :placeholder="serverPathPlaceholder + domainInput"   v-model="serverPathInput" @input="inputServerPath()"></div>
                             <div class="col-md-4"><input type="text" placeholder="/public" v-model="documentRootInput"></div>
                         </div>
                         <div class="row">
@@ -117,7 +117,7 @@
                     <div class="button-content " v-if="col==3">
                         <div class="row reverse-proxy-scope1">
                             <div class="col-md-2">Reverse Proxy</div>
-                            <div class="col-md-10"><label for="reverse-proxy-checkbox"><input type="checkbox" id="reverse-proxy-checkbox">enabled</label></div>
+                            <div class="col-md-10"><label for="reverse-proxy-checkbox"><input type="checkbox" id="reverse-proxy-checkbox" v-model="reverseProxyEnabled">enabled</label></div>
                         </div>
                         <div class="row reverse-proxy-scope2">
                             <div class="col-md-3">Path</div>
@@ -138,10 +138,10 @@
                         {{ConfigPreview.LISTEN}} [::]{{ipv6Input}};
 
                     {{ConfigPreview.SERVER_NAME}} <span v-if="subDomainCheckbox">www.</span>{{domainInput}};
-                        {{ConfigPreview.SET}} {{serverPathInput}}
+                        {{ConfigPreview.SET}} {{serverPathPlaceholder}}{{domainInput}}
                         {{ConfigPreview.ROOT}} {{documentRootInput}};
 
-                        <span>
+                        <span v-if="reverseProxyEnabled">
                             location /{{reverseProxyPathInput}}{
                                 {{ConfigPreview.PROXY_PASS}} {{reverseProxyPass}}
                             }
@@ -166,31 +166,37 @@
                 this.col=col;
 
                 this.buttonScope[col-1]="buttonScopeNotClicked"
+            },
+            inputServerPath () {
+                this.serverPathPlaceholder = this.serverPathInput
             }
         },
         data () {
             return {
                 buttonScope:['buttonScopeClicked','buttonScopeClicked','buttonScopeClicked'],
                 col: 1,
-                domainInputBox: null,
-                pathInputBox: null,
-                documentRootInputBox: null,
+                domainInputBox: '',
+                pathInputBox: '',
+                documentRootInputBox: '',
                 ConfigPreview: ConfigPreview,
-                domainInput: null,
-                serverPathInput: null,
-                documentRootInput: null,
-                ipv4Input: null,
-                ipv6Input: null,
+                domainInput: '',
+                serverPathInput: '',
+                serverPathPlaceholder: '/var/www/',
+                documentRootInput: '',
+                ipv4Input: '',
+                ipv6Input: '',
                 subDomainCheckbox: false,
                 selected: 'first',
                 options: [
                     { text: 'Let\'sEncrypt', value: 'first' },
                     { text: 'custom certificate', value: 'second' }
                 ],
-                reverseProxyPathInput: null,
-                reverseProxyPass: null
+                reverseProxyPathInput: '',
+                reverseProxyPass: '',
+                reverseProxyEnabled: false,
             }
         }
+
     }
 
 </script>
