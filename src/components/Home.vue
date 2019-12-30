@@ -85,7 +85,7 @@
                         <div class="row https-scope7">
                             <div class="col-md-4">Certification type</div>
                             <div class="col-md-4">
-                                <b-form-group >
+                                <b-form-group>
                                     <b-form-radio-group
                                             v-model="CertificationSelected"
                                             :options="CertificationOptions"
@@ -234,7 +234,7 @@
         margin: 3px 5px;
     }
     .config-preview{
-        margin: 100px auto;
+        margin-top: 100px;
     }
 
 
