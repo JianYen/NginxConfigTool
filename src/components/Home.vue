@@ -85,32 +85,32 @@
                         <div class="row https-scope7">
                             <div class="col-md-4">Certification type</div>
                             <div class="col-md-4">
-                                <b-form-group>
+                                <b-form-group >
                                     <b-form-radio-group
                                             v-model="CertificationSelected"
-                                            :options="options"
+                                            :options="CertificationOptions"
                                             name="radios-stacked"
                                             stacked
                                     ></b-form-radio-group>
                                 </b-form-group>
                             </div>
-                            <div class="col-md-4">Selected: <strong>{{ selected }}</strong></div>
                         </div>
-                        <div class="row https-scope8">
+                        <div class="row https-scope8" v-if="CertificationSelected=='first'">
                             <div class="col-md-4">Let's Encrypt e-mail</div>
                             <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row https-scope9">
+                        <div class="row https-scope9-1" v-if="CertificationSelected=='second'">
                             <div class="col-md-4">ssl_certificate</div>
                             <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row https-scope9-2">
+                        <div class="row https-scope9-2" v-if="CertificationSelected=='second'">
                             <div class="col-md-4">ssl_certificate_key</div>
                             <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.key"></div>
                             <div class="col-md-4"></div>
                         </div>
+
                     </div>
 
                     <!--Reverse Proxy區塊-->
@@ -186,8 +186,8 @@
                 ipv4Input: '',
                 ipv6Input: '',
                 subDomainCheckbox: false,
-                selected: 'first',
-                options: [
+                CertificationSelected: 'first',
+                CertificationOptions: [
                     { text: 'Let\'sEncrypt', value: 'first' },
                     { text: 'custom certificate', value: 'second' }
                 ],
