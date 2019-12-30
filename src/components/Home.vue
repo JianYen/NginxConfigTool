@@ -64,7 +64,7 @@
                         </div>
                         <div class="row https-scope3">
                             <div class="col-md-4">Force HTTPS</div>
-                            <div class="col-md-4"><b-form-checkbox>enabled(http://example.com -> https://example.com)</b-form-checkbox></div>
+                            <div class="col-md-4"><b-form-checkbox>enabled (http://example.com -> https://example.com)</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
                         <div class="row https-scope4">
@@ -101,9 +101,14 @@
                             <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div class="row https-scope8-2">
+                        <div class="row https-scope9">
                             <div class="col-md-4">ssl_certificate</div>
                             <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row https-scope9-2">
+                            <div class="col-md-4">ssl_certificate_key</div>
+                            <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.key"></div>
                             <div class="col-md-4"></div>
                         </div>
                     </div>
