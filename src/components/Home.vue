@@ -20,7 +20,7 @@
                             <div class="col-md-4">Document root</div>
                         </div>
                         <div class="row server-scope2">
-                            <div class="col-md-4"><input type="text" placeholder="example.com" v-model="domainInput"></div>
+                            <div class="col-md-4"><input type="text" placeholder="example.com" v-model="domainInput" @input="inputCertificate"></div>
                             <div class="col-md-4"><input id="server-path-input" type="text" :placeholder="serverPathPlaceholder + domainInput"   v-model="serverPathInput" @input="inputServerPath()"></div>
                             <div class="col-md-4"><input type="text" placeholder="/public" v-model="documentRootInput"></div>
                         </div>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="row https-scope4">
                                 <div class="col-md-4">HSTS HTTPS</div>
-                                <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                                <div class="col-md-4"><b-form-checkbox v-model="hstsEnabled">enabled</b-form-checkbox></div>
                                 <div class="col-md-4"></div>
                             </div>
                             <div class="row https-scope5">
@@ -96,17 +96,17 @@
                                     </b-form-group>
                                 </div>
                             </div>
-                            <div class="row https-scope8" v-if="CertificationSelected=='first'&httpEnabled">
+                            <div class="row https-scope8" v-if="CertificationSelected=='first'&httpsEnabled">
                                 <div class="col-md-4">Let's Encrypt e-mail</div>
-                                <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
+                                <div class="col-md-4"><input type="text" :placeholder="'info@'+defaultUrl"></div>
                                 <div class="col-md-4"></div>
                             </div>
-                            <div class="row https-scope9-1" v-if="CertificationSelected=='second'&httpEnabled">
+                            <div class="row https-scope9-1" v-if="CertificationSelected=='second'&httpsEnabled">
                                 <div class="col-md-4">ssl_certificate</div>
                                 <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
                                 <div class="col-md-4"></div>
                             </div>
-                            <div class="row https-scope9-2" v-if="CertificationSelected=='second'&httpEnabled">
+                            <div class="row https-scope9-2" v-if="CertificationSelected=='second'&httpsEnabled">
                                 <div class="col-md-4">ssl_certificate_key</div>
                                 <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.key"></div>
                                 <div class="col-md-4"></div>
@@ -136,10 +136,11 @@
         <div class="config-preview">
             <pre>
                 <code>
+                    <strong>/etc/nginx/sites-available/{{domainInput}}.conf</strong>
                     server {
                         {{ConfigPreview.LISTEN}} {{ipv4Input}};
                         {{ConfigPreview.LISTEN}} [::]{{ipv6Input}};
-                    <span v-if="httpsEnabled">
+                    <span v-if="httpsEnabled&httpsEnabled">
                         {{ConfigPreview.LISTEN}}443 ssl <spen v-if="https2Enabled">{{http2}}</spen>;
                         {{ConfigPreview.LISTEN}}[::]:443 ssl <spen v-if="https2Enabled">{{http2}}</spen>;
                     </span>
@@ -155,22 +156,35 @@
                     </span>
                     }
 
-                    <spen v-if="forceHttpsEnabled">
+                    <spen v-if="httpsEnabled&forceHttpsEnabled">
                     # HTTP redirect
                     server{
                         {{ConfigPreview.LISTEN}} 80;
                         {{ConfigPreview.LISTEN}} [::]:80;
 
-                        {{ConfigPreview.SERVER_NAME}} example.com;
+                        {{ConfigPreview.SERVER_NAME}} .{{domainInput}};
 
                         {{ConfigPreview.INCLUDE}} nginxconfig.io/letsencrypt.conf;
 
                         location / {
-                            return 301 https://example.com$request_uri;
+                            return 301 https://{{domainInput}}$request_uri;
                         }
                     }
                     </spen>
 
+                    <strong>/etc/nginx/nginxconfig.io/security.conf</strong>
+                    # security headers
+                    add_header X-Frame-Options "SAMEORIGIN" always;
+                    add_header X-XSS-Protection "1; mode=block" always;
+                    add_header X-Content-Type-Options "nosniff" always;
+                    add_header Referrer-Policy "no-referrer-when-downgrade" always;
+                    add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
+                    <span v-if="hstsEnabled">add_header Strict-Transport-Security "max-age=31536000" always;</span>
+
+                    # . files
+                    location ~ /\.(?!well-known) {
+                        deny all;
+                    }
                 </code>
             </pre>
 
@@ -192,7 +206,7 @@
                 this.buttonScope[col-1]="buttonScopeNotClicked"
             },
             inputServerPath () {
-                this.serverPathPlaceholder = this.serverPathInput
+                this.serverPathPlaceholder = this.serverPathInput;
             },
             httpSwitch () {
                 if(this.httpsEnabled == true) {
@@ -200,6 +214,13 @@
                 }
                 else{
                     this.httpsConfig = 'httpsClose'
+                }
+            },
+            inputCertificate(){
+                if(this.domainInput.trim()==''){
+                    this.defaultUrl = 'example.com'
+                }else{
+                    this.defaultUrl = this.domainInput
                 }
             }
         },
@@ -230,7 +251,10 @@
                 httpsConfig: 'httpsEnabled',
                 http2: 'http2',
                 https2Enabled: true,
-                forceHttpsEnabled: true
+                forceHttpsEnabled: true,
+                hstsEnabled: true,
+                defaultUrl: 'example.com',
+                sslCertificate: '/etc/nginx/ssl/'
             }
         }
 
