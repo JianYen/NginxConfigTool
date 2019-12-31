@@ -54,18 +54,18 @@
                     <div class="button-content" v-if="col==2">
                         <div class="row https-scope">
                             <div class="col-md-4">HTTPS</div>
-                            <div class="col-md-4"><b-form-checkbox v-model="httpEnabled" :click="httpSwitch()">enabled</b-form-checkbox></div>
+                            <div class="col-md-4"><b-form-checkbox v-model="httpsEnabled" :click="httpSwitch()">enabled</b-form-checkbox></div>
                             <div class="col-md-4"></div>
                         </div>
-                        <div :class=httpConfig>
+                        <div :class=httpsConfig>
                             <div class="row https-scope2">
                                 <div class="col-md-4">HTTPS/2</div>
-                                <div class="col-md-4"><b-form-checkbox>enabled</b-form-checkbox></div>
+                                <div class="col-md-4"><b-form-checkbox v-model="https2Enabled">enabled</b-form-checkbox></div>
                                 <div class="col-md-4"></div>
                             </div>
                             <div class="row https-scope3">
                                 <div class="col-md-4">Force HTTPS</div>
-                                <div class="col-md-4"><b-form-checkbox>enabled (http://example.com -> https://example.com)</b-form-checkbox></div>
+                                <div class="col-md-4"><b-form-checkbox v-model="forceHttpsEnabled">enabled (http://example.com -> https://example.com)</b-form-checkbox></div>
                                 <div class="col-md-4"></div>
                             </div>
                             <div class="row https-scope4">
@@ -96,22 +96,23 @@
                                     </b-form-group>
                                 </div>
                             </div>
-                            <div class="row https-scope8" v-if="CertificationSelected=='first'">
+                            <div class="row https-scope8" v-if="CertificationSelected=='first'&httpEnabled">
                                 <div class="col-md-4">Let's Encrypt e-mail</div>
                                 <div class="col-md-4"><input type="text" placeholder="info@example.com"></div>
                                 <div class="col-md-4"></div>
                             </div>
-                            <div class="row https-scope9-1" v-if="CertificationSelected=='second'">
+                            <div class="row https-scope9-1" v-if="CertificationSelected=='second'&httpEnabled">
                                 <div class="col-md-4">ssl_certificate</div>
                                 <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.crt"></div>
                                 <div class="col-md-4"></div>
                             </div>
-                            <div class="row https-scope9-2" v-if="CertificationSelected=='second'">
+                            <div class="row https-scope9-2" v-if="CertificationSelected=='second'&httpEnabled">
                                 <div class="col-md-4">ssl_certificate_key</div>
                                 <div class="col-md-4"><input type="text" placeholder="/etc/nginx/ssl/example.com.key"></div>
                                 <div class="col-md-4"></div>
                             </div>
                         </div>
+
 
                     </div>
 
@@ -138,17 +139,38 @@
                     server {
                         {{ConfigPreview.LISTEN}} {{ipv4Input}};
                         {{ConfigPreview.LISTEN}} [::]{{ipv6Input}};
+                    <span v-if="httpsEnabled">
+                        {{ConfigPreview.LISTEN}}443 ssl <spen v-if="https2Enabled">{{http2}}</spen>;
+                        {{ConfigPreview.LISTEN}}[::]:443 ssl <spen v-if="https2Enabled">{{http2}}</spen>;
+                    </span>
 
                     {{ConfigPreview.SERVER_NAME}} <span v-if="subDomainCheckbox">www.</span>{{domainInput}};
                         {{ConfigPreview.SET}} {{serverPathPlaceholder}}{{domainInput}}
                         {{ConfigPreview.ROOT}} {{documentRootInput}};
 
-                        <span v-if="reverseProxyEnabled">
-                            location /{{reverseProxyPathInput}}{
-                                {{ConfigPreview.PROXY_PASS}} {{reverseProxyPass}}
-                            }
-                        </span>
+                    <span v-if="reverseProxyEnabled">
+                        location /{{reverseProxyPathInput}}{
+                            {{ConfigPreview.PROXY_PASS}} {{reverseProxyPass}}
+                        }
+                    </span>
                     }
+
+                    <spen v-if="forceHttpsEnabled">
+                    # HTTP redirect
+                    server{
+                        {{ConfigPreview.LISTEN}} 80;
+                        {{ConfigPreview.LISTEN}} [::]:80;
+
+                        {{ConfigPreview.SERVER_NAME}} example.com;
+
+                        {{ConfigPreview.INCLUDE}} nginxconfig.io/letsencrypt.conf;
+
+                        location / {
+                            return 301 https://example.com$request_uri;
+                        }
+                    }
+                    </spen>
+
                 </code>
             </pre>
 
@@ -173,11 +195,11 @@
                 this.serverPathPlaceholder = this.serverPathInput
             },
             httpSwitch () {
-                if(this.httpEnabled == true) {
-                    this.httpConfig = 'httpEnabled'
+                if(this.httpsEnabled == true) {
+                    this.httpsConfig = 'httpsEnabled'
                 }
                 else{
-                    this.httpConfig = 'httpClose'
+                    this.httpsConfig = 'httpsClose'
                 }
             }
         },
@@ -204,6 +226,11 @@
                 reverseProxyPathInput: '',
                 reverseProxyPass: '',
                 reverseProxyEnabled: false,
+                httpsEnabled: true,
+                httpsConfig: 'httpsEnabled',
+                http2: 'http2',
+                https2Enabled: true,
+                forceHttpsEnabled: true
             }
         }
 
@@ -245,6 +272,12 @@
     }
     .config-preview{
         margin-top: 100px;
+    }
+    .httpsEnabled{
+    }
+    .httpsClose{
+        opacity:0.5;
+        pointer-events:none;
     }
 
 

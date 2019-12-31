@@ -5,5 +5,6 @@ export default {
          SET: 'set',
          ROOT: 'root',
          INDEX: 'index',
-         PROXY_PASS: 'proxy_pass'
+         PROXY_PASS: 'proxy_pass',
+         INCLUDE: 'include'
 }
