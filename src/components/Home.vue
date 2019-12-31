@@ -113,7 +113,6 @@
                             </div>
                         </div>
 
-
                     </div>
 
                     <!--Reverse Proxy區塊-->
@@ -205,8 +204,6 @@
                 reverseProxyPathInput: '',
                 reverseProxyPass: '',
                 reverseProxyEnabled: false,
-                httpEnabled: true,
-                httpConfig: 'httpEnabled',
             }
         }
 
@@ -248,12 +245,6 @@
     }
     .config-preview{
         margin-top: 100px;
-    }
-    .httpEnabled{
-    }
-    .httpClose{
-        opacity:0.5;
-        pointer-events:none;
     }
 
 
