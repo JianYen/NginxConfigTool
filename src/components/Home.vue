@@ -75,12 +75,12 @@
                             </div>
                             <div class="row https-scope5">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-4"><b-form-checkbox>includeSubDomains</b-form-checkbox></div>
+                                <div class="col-md-4"><b-form-checkbox v-model="hstsIncludeSubDomainsEnabled">includeSubDomains</b-form-checkbox></div>
                                 <div class="col-md-4"></div>
                             </div>
                             <div class="row https-scope6">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-4"><b-form-checkbox>preload</b-form-checkbox></div>
+                                <div class="col-md-4"><b-form-checkbox v-model="hstsPreloadEnabled">preload</b-form-checkbox></div>
                                 <div class="col-md-4"></div>
                             </div>
                             <div class="row https-scope7">
@@ -179,7 +179,7 @@
                     add_header X-Content-Type-Options "nosniff" always;
                     add_header Referrer-Policy "no-referrer-when-downgrade" always;
                     add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
-                    <span v-if="hstsEnabled">add_header Strict-Transport-Security "max-age=31536000" always;</span>
+                    <span v-if="hstsEnabled">add_header Strict-Transport-Security "max-age=31536000<label v-if="hstsIncludeSubDomainsEnabled">{{hstsIncludeSubDomains}}</label><label v-if="hstsPreloadEnabled">{{hstsPreload}}</label>" always;</span>
 
                     # . files
                     location ~ /\.(?!well-known) {
@@ -256,7 +256,11 @@
                 forceHttpsEnabled: true,
                 hstsEnabled: true,
                 defaultUrl: 'example.com',
-                sslCertificate: '/etc/nginx/ssl/'
+                hstsIncludeSubDomainsEnabled: true,
+                hstsIncludeSubDomains: '; includeSubDomains',
+                hstsPreloadEnabled: true,
+                hstsPreload:'; preload'
+
             }
         }
 
